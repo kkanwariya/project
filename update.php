@@ -25,13 +25,9 @@ if ($_POST['id'] == "issue")
   $bname=$row['bname'];
   $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bookname`, `bookid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
 }
-else if($_POST['id']  == 2)
+else if($_POST['id']  == "insert")
 {
-  $result=$conn->query("SELECT MAX(`Cid`) as max FROM Customer");
-  $row = mysqli_fetch_array($result);
-  $highest = $row['max']+1;
-  $sql = "INSERT INTO Customer(`Cname`, `City`, `Cid`)
-  VALUES ('$_POST[cname]','$_POST[ccity]',$highest)";
+  $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', $_POST[bisbn], '$_POST[bauthor]', $_POST[bedition], $_POST[nbooks])";
 }
 //$sql = "INSERT INTO Branch (`Bname`, `Bcity`, `Assets`)
 //VALUES ('$_POST[bname]', '$_POST[bcity]' ,'$_POST[assets]')";

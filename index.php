@@ -1,9 +1,11 @@
 <html><body>
   <h2>Insert a new Book</h2>
-  <form name="htmlform" method="post" action="formsend.php">
+  <form name="htmlform" method="post" action="update.php">
   <table width="450px">
   </tr>
-
+  <td valign="top">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="insert">
+  </td>
   <tr>
    <td valign="top">
     <label for="dob">Book Name</label>
@@ -61,11 +63,6 @@
 
   </table>
   </form>
-
-
-
-
-
 
 
   <h2>Issue a Book</h2>
