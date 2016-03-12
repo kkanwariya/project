@@ -3,7 +3,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "shubh";
+$password = "kame1234!";
 $dbname = "project";
 $issuedays = 15;
 // Create connection
@@ -25,17 +25,33 @@ if ($_POST['id'] == "issue")
   $bname=$row['bname'];
   $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bookname`, `bookid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
 }
-else if($_POST['id']  == "insert")
+elseif($_POST['id']  == "insert")
 {
   $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', $_POST[bisbn], '$_POST[bauthor]', $_POST[bedition], $_POST[nbooks])";
+  $result = $conn->query($sql);
 }
-//$sql = "INSERT INTO Branch (`Bname`, `Bcity`, `Assets`)
-//VALUES ('$_POST[bname]', '$_POST[bcity]' ,'$_POST[assets]')";
-if ($conn->query($sql) === TRUE) {
-	echo "hi";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+elseif ($_POST['id'] == "customer")
+{
+  $sql = "INSERT INTO `customer`(`cid`, `cname`, `cemail`, `caddress`) VALUES ('$_POST[cid]', '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]')";
+  $result = $conn->query($sql);
+
 }
+
+elseif ($_POST['id'] == "return")
+{
+  $sql = "SELECT `issueid`, `dateissue`, `expiration`, `bookname`, `bookid`, `cid` FROM `issue` WHERE `bookid`=`bid`=$_POST[bid] and cid = $_POST[cid]";
+  $result = $conn->query($sql);
+  $row = mysqli_fetch_assoc($result);
+  echo $row["expiration"];
+  $dateissue = $row["dateissue"];
+  $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
+  $result = $conn->query($sql);
+  $row = mysqli_fetch_assoc($result);
+  $datereturn=$row['da'];
+  $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `dateissue`, `datereturn`) VALUES ($_POST[bid], $_POST[cid], $dateissue, $datereturn)";
+  $result = $conn->query($sql);
+}
+
 echo "</br><a href='index.php'>Go Back</a>";
 $conn->close();
 ?>
