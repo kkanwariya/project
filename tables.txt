@@ -1,0 +1,11 @@
+CREATE TABLE `project`.`issue` ( `issueid` INT NOT NULL AUTO_INCREMENT, `dateissue` DATE NOT NULL , `expiration` DATE NOT NULL , `bookname` VARCHAR(255) NOT NULL , `bookid` INT NOT NULL , `cid` INT NOT NULL , PRIMARY KEY (`issueid`)) ENGINE = InnoDB;
+CREATE TABLE Persons
+(
+	bid int NOT NULL AUTO_INCREMENT,
+	bname varchar(255),
+	bisbn bigint,
+	bauthor varchar(255),
+	bedition int,
+	nbooks int,
+    PRIMARY KEY (bid)
+)
