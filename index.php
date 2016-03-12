@@ -157,10 +157,25 @@
   </td>
   <tr>
    <td valign="top">
-    <label>Book ID</label>
+    <label>Book Id</label>
    </td>
    <td valign="top">
     <input  type="text" name="bid" maxlength="50" size="30">
+   </td>
+  </tr>
+  <tr>
+   <td valign="top">
+    <label>Customer id</label>
+   </td>
+   <td valign="top">
+    <input type="text" name="cid" maxlength="50" size="30">
+   </td>
+  </tr>
+
+  </tr>
+  <tr>
+   <td colspan="2" style="text-align:center">
+    <input type="submit" value="Submit">
    </td>
   </tr>
   </table>

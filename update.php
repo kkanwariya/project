@@ -24,6 +24,7 @@ if ($_POST['id'] == "issue")
   $row = mysqli_fetch_assoc($result);
   $bname=$row['bname'];
   $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bookname`, `bookid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
+  $result = $conn->query($sql);
 }
 elseif($_POST['id']  == "insert")
 {
@@ -39,16 +40,18 @@ elseif ($_POST['id'] == "customer")
 
 elseif ($_POST['id'] == "return")
 {
-  $sql = "SELECT `issueid`, `dateissue`, `expiration`, `bookname`, `bookid`, `cid` FROM `issue` WHERE `bookid`=`bid`=$_POST[bid] and cid = $_POST[cid]";
+  $sql = "SELECT `issueid`, `dateissue`, `expiration`, `bookname`, `bookid`, `cid` FROM `issue` WHERE `bookid`=$_POST[bid] and cid = $_POST[cid]";
   $result = $conn->query($sql);
   $row = mysqli_fetch_assoc($result);
+  echo "Issued Till  ";
   echo $row["expiration"];
   $dateissue = $row["dateissue"];
   $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
   $result = $conn->query($sql);
   $row = mysqli_fetch_assoc($result);
   $datereturn=$row['da'];
-  $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `dateissue`, `datereturn`) VALUES ($_POST[bid], $_POST[cid], $dateissue, $datereturn)";
+  // echo $dateissue;
+  $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `dateissue`, `datereturn`) VALUES ($_POST[bid], $_POST[cid], '$dateissue', '$datereturn')";
   $result = $conn->query($sql);
 }
 
