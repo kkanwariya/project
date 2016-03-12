@@ -1,44 +1,70 @@
 <html><body>
-  <h2>Insert a Branch</h2>
-  <form name="branch" method="post" action="update.php">
+  <h2>Insert a new Book</h2>
+  <form name="htmlform" method="post" action="formsend.php">
   <table width="450px">
   </tr>
-  <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="1">
-  </td>
+
   <tr>
    <td valign="top">
-    <label>Branch Name</label>
+    <label for="dob">Book Name</label>
    </td>
    <td valign="top">
-    <input type="text" name="bname" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td valign="top">
-    <label>Branch City</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="bcity" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td valign="top">
-    <label>Assets</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="assets" maxlength="80" size="30">
+    <input type="text" name="bname" maxlength="50" size="30" required>
    </td>
   </tr>
 
+
+  <tr>
+   <td valign="top">
+    <label>Book ISBN</label>
+   </td>
+   <td valign="top">
+    <input type="number" name="bisbn" maxlength="80" size="30" required>
+   </td>
   </tr>
+
+
+  <tr>
+   <td valign="top">
+    <label>Book Author</label>
+   </td>
+   <td valign="top">
+    <input  type="text" name="bauthor" maxlength="30" size="30" required>
+   </td>
+  </tr>
+  <tr>
+   <td valign="top">
+    <label>Book Edition</label>
+   </td>
+  <td valign="top">
+    <input type="number" name="bedition" maxlength="30" size="30" required>
+   </td>
+
+  </tr>
+
+
+  <tr>
+   <td valign="top">
+    <label>No of Books</label>
+   </td>
+  <td valign="top">
+    <input  type="number" name="nbooks" maxlength="30" size="30">
+   </td>
+
+  </tr>
+
   <tr>
    <td colspan="2" style="text-align:center">
     <input type="submit" value="Submit">
    </td>
   </tr>
+
   </table>
   </form>
+
+
+
+
 
 
 
