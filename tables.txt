@@ -1,5 +1,4 @@
-CREATE TABLE `project`.`issue` ( `issueid` INT NOT NULL AUTO_INCREMENT, `dateissue` DATE NOT NULL , `expiration` DATE NOT NULL , `bookname` VARCHAR(255) NOT NULL , `bookid` INT NOT NULL , `cid` INT NOT NULL , PRIMARY KEY (`issueid`)) ENGINE = InnoDB;
-CREATE TABLE Persons
+CREATE TABLE book
 (
 	bid int NOT NULL AUTO_INCREMENT,
 	bname varchar(255),
@@ -8,4 +7,36 @@ CREATE TABLE Persons
 	bedition int,
 	nbooks int,
     PRIMARY KEY (bid)
+)
+CREATE TABLE customer
+(
+	cid int NOT NULL AUTO_INCREMENT,
+	cname varchar(255),
+	cemail varchar(255),
+	caddress varchar(255),
+	fine int,
+	PRIMARY KEY (cid)
+);
+CREATE TABLE issue` 
+(
+	issueid INT NOT NULL AUTO_INCREMENT,
+	dateissue DATE NOT NULL ,
+	expiration DATE NOT NULL ,
+	bookname VARCHAR(255) NOT NULL ,
+	bookid INT NOT NULL ,
+	cid INT NOT NULL ,
+	PRIMARY KEY (issueid),
+	Foreign key (bid) refrences (book),
+	Foreign key (cid) refrences (customer)
+);
+
+CREATE TABLE bookreturn
+(
+	returnid int NOT NULL AUTO_INCREMENT,
+	bid int,
+    cid int,
+    datereturn DATE,
+    PRIMARY KEY (returnid),
+    Foreign key (bid) refrences (book),
+	Foreign key (cid) refrences (customer)
 )
