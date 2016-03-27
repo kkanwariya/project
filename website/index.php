@@ -38,6 +38,12 @@
       </div><!-- /.container -->
     </div><!-- /.navbar -->
 
+
+ <div style="float:left;padding:80px">
+ <h2>Login</h2>
+ 
+ </div>
+  <div style="width:500px;float:right;padding:20px;margin:20px 40px;font-size:18px;height:539px">
 <h2>Add Member</h2>
   <form name="htmlform" method="post" action="update.php">
   <table width="450px">
@@ -47,7 +53,7 @@
   </td>
   <tr>
    <td valign="top">
-    <label>Customer ID</label>
+    <label>Username</label>
    </td>
    <td valign="top">
     <input  type="number" name="cid" maxlength="50" size="30">
@@ -55,7 +61,7 @@
   </tr>
   <tr>
    <td valign="top">
-    <label>Customer Name</label>
+    <label>Name</label>
    </td>
    <td valign="top">
     <input  type="text" name="cname" maxlength="50" size="30">
@@ -64,7 +70,7 @@
 
  <tr>
    <td valign="top">
-    <label>Customer Email</label>
+    <label>Email</label>
    </td>
    <td valign="top">
     <input  type="text"  name="cemail" maxlength="50" size="30">
@@ -72,7 +78,7 @@
   </tr>
   <tr>
    <td valign="top">
-    <label>Customer Address</label>
+    <label>Address</label>
    </td>
    <td valign="top">
     <input  type="text" name="caddress" maxlength="50" size="30">
@@ -85,6 +91,7 @@
   </tr>
   </table>
   </form>
+  </div>
     <!--================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
