@@ -39,11 +39,38 @@
     </div><!-- /.navbar -->
 
 
- <div style="float:left;padding:80px">
+ <div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
  <h2>Login</h2>
- 
+ <form name="htmlform" method="post" action="update.php">
+  <table width="450px">
+  </tr>
+  <td valign="top">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="login">
+  </td>
+  <tr>
+   <td valign="top">
+    <label>Username</label>
+   </td>
+   <td valign="top">
+    <input  type="text" name="username" maxlength="50" size="30">
+   </td>
+  <tr>
+   <td valign="top">
+    <label>Password</label>
+   </td>
+   <td valign="top">
+    <input  type="password" name="password" maxlength="50" size="30">
+   </td>
+  </tr>
+  <tr>
+   <td colspan="2" style="text-align:center">
+    <input type="submit" value="Submit">
+   </td>
+  </tr>
+  </table>
+  </form>
  </div>
-  <div style="width:500px;float:right;padding:20px;margin:20px 40px;font-size:18px;height:539px">
+  <div style="float:right;margin: 10px;padding:20px;">
 <h2>Add Member</h2>
   <form name="htmlform" method="post" action="update.php">
   <table width="450px">
@@ -56,7 +83,7 @@
     <label>Username</label>
    </td>
    <td valign="top">
-    <input  type="number" name="cid" maxlength="50" size="30">
+    <input  type="text" name="username" maxlength="50" size="30">
    </td>
   </tr>
   <tr>
@@ -82,6 +109,14 @@
    </td>
    <td valign="top">
     <input  type="text" name="caddress" maxlength="50" size="30">
+   </td>
+  </tr>
+  <tr>
+   <td valign="top">
+    <label>Password</label>
+   </td>
+   <td valign="top">
+    <input  type="password" name="password" maxlength="50" size="30">
    </td>
   </tr>
   <tr>
