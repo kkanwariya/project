@@ -15,9 +15,11 @@ CREATE TABLE customer
 	cemail varchar(255),
 	caddress varchar(255),
 	fine int,
+	username VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
 	PRIMARY KEY (cid)
 );
-CREATE TABLE issue` 
+CREATE TABLE issue 
 (
 	issueid INT NOT NULL AUTO_INCREMENT,
 	dateissue DATE NOT NULL ,

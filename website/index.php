@@ -39,6 +39,7 @@
     </div><!-- /.navbar -->
 
 
+<!-- check if the session is set. if it is display the home page of the user -->
  <div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
  <h2>Login</h2>
  <form name="htmlform" method="post" action="update.php">
