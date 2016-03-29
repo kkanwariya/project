@@ -3,7 +3,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "kame1234!";
+$password = "shubh";
 $dbname = "project";
 $issuedays = 15;
 // Create connection
@@ -26,16 +26,37 @@ if ($_POST['id'] == "issue")
   $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bookname`, `bookid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
   $result = $conn->query($sql);
 }
-elseif($_POST['id']  == "insert")
+elseif($_POST['id']  == "insertbook")
 {
   $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', $_POST[bisbn], '$_POST[bauthor]', $_POST[bedition], $_POST[nbooks])";
   $result = $conn->query($sql);
 }
+elseif($_POST['id']  == "login")
+{
+	$pass=md5($_POST['password']);
+	$sql="SELECT cid FROM customer WHERE username='$_POST[username]' and password = '$pass'";
+    $result = $conn->query($sql);
+    if (mysqli_num_rows($result) > 0)
+	{
+		//start the session.
+		echo 'hi';
+	}
+}
 elseif ($_POST['id'] == "customer")
 {
-  $sql = "INSERT INTO `customer`(`cid`, `cname`, `cemail`, `caddress`) VALUES ('$_POST[cid]', '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]')";
+  $pass=md5($_POST['password']);
+  //check for uniqueness of username
+  $sql = "INSERT INTO `customer`(`cname`, `cemail`, `caddress`,`username`, `password`) VALUES ( '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]', '$_POST[username]','$pass')";
+  $conn->query($sql);
+  //can remove the cid from display
+  $sql= "SELECT `cid` from `customer` WHERE cname ='$_POST[cname]' and cemail = '$_POST[cemail]' and caddress='$_POST[caddress]'";
   $result = $conn->query($sql);
-
+  $row = mysqli_fetch_assoc($result);
+  echo "Your Customer ID is:";
+  echo $row['cid'];
+  // echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  //i.e. till this point
+  header('Location: index.php');
 }
 
 elseif ($_POST['id'] == "return")
