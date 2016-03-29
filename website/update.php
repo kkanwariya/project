@@ -31,6 +31,17 @@ elseif($_POST['id']  == "insertbook")
   $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', $_POST[bisbn], '$_POST[bauthor]', $_POST[bedition], $_POST[nbooks])";
   $result = $conn->query($sql);
 }
+elseif($_POST['id']  == "login")
+{
+	$pass=md5($_POST['password']);
+	$sql="SELECT cid FROM customer WHERE username='$_POST[username]' and password = '$pass'";
+    $result = $conn->query($sql);
+    if (mysqli_num_rows($result) > 0)
+	{
+		//start the session.
+		echo 'hi';
+	}
+}
 elseif ($_POST['id'] == "customer")
 {
   $pass=md5($_POST['password']);
