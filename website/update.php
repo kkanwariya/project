@@ -39,10 +39,19 @@ elseif($_POST['id']  == "login")
     if (mysqli_num_rows($result) > 0)
 	{
 		//start the session.
-		echo 'hi';
+		session_start();
+		$row = mysqli_fetch_assoc($result);
+		$_SESSION["username"]=$_POST[username];
+		$_SESSION["cid"]= $row['cid'];
+		// echo 'hi' + $_SESSION["username"];
+		header('Location: index.php');
+	}
+	else
+	{
+		echo "Incorrect username/password";
 	}
 }
-elseif ($_POST['id'] == "customer")
+elseif ($_POST['id'] == "signup")
 {
   $pass=md5($_POST['password']);
   //check for uniqueness of username

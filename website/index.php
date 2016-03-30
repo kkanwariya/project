@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Shubham Jain">
 
-    <title>Shubham Jain</title>
+    <title>Book Management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.css" rel="stylesheet">
@@ -24,6 +24,13 @@
   <body style="padding:50px 50px 0px 50px">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
+      <?php if (isset($_SESSION))
+		{
+      	echo ' <div class="navbar-header" style="float:right">
+          <a class="navbar-brand" href="./index.html" style="font-size:30px;">' + $_SESSION["username"] +'</a>
+        </div>';
+    	}
+    	?>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav" >
             <li><a href="./index.php" style="font-size: 3ex">Home</a></li>
@@ -40,7 +47,14 @@
 
 
 <!-- check if the session is set. if it is display the home page of the user -->
- <div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
+<?php if (isset($_SESSION['username']) && !empty($_SESSION['username']))
+{
+	//display homepage;
+	echo 'hi' +  $_SESSION["username"];
+}
+else
+{
+	echo '<div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
  <h2>Login</h2>
  <form name="htmlform" method="post" action="update.php">
   <table width="450px">
@@ -77,7 +91,7 @@
   <table width="450px">
   </tr>
   <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="customer">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="signup">
   </td>
   <tr>
    <td valign="top">
@@ -127,7 +141,9 @@
   </tr>
   </table>
   </form>
-  </div>
+  </div>';
+}
+ ?>
     <!--================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
