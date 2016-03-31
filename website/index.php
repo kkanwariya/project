@@ -24,126 +24,139 @@
   <body style="padding:50px 50px 0px 50px">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
-      <?php if (isset($_SESSION))
-		{
+      <?php 
+      session_start();	
+      if (isset($_SESSION['username']) && !empty($_SESSION['username'])){
       	echo ' <div class="navbar-header" style="float:right">
-          <a class="navbar-brand" href="./index.html" style="font-size:30px;">' + $_SESSION["username"] +'</a>
-        </div>';
-    	}
-    	?>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <form name="htmlform" method="post" action="update.php">
+			<input  type="hidden" name="id" value="logout">
+			<input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
+			</form>
+        </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav" >
-            <li><a href="./index.php" style="font-size: 3ex">Home</a></li>
-            <li><a href="./issue.php" style="font-size: 3ex">Issue</a></li>
-            <li><a href="./return.php" style="font-size: 3ex">Return</a></li>
-            <li><a href="./insert.php" style="font-size: 3ex">Insert Book</a></li>
-            <li><a href="./return.php" style="font-size: 3ex">Return</a></li>
-            <li><a href="./search.php" style="font-size: 3ex">Search</a></li>
+         <ul class="nav navbar-nav" >
+         <li><a href="./index.php" style="font-size: 30px">Home</a></li>
+            <li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
+            <li><a href="./return.php" style="font-size: 30px">Return</a></li>
+            <li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
+            <li><a href="./return.php" style="font-size: 30px">Return</a></li>
+            <li><a href="./search.php" style="font-size: 30px">Search</a></li>
 
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
-    </div><!-- /.navbar -->
+	          </ul>
+	        </div><!-- /.nav-collapse -->
+	      </div><!-- /.container -->
+	    </div><!-- /.navbar -->
+		<!-- check if the session is set. if it is display the home page of the user -->';
+        // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
+        //display homepage;
+		echo 'hi '.$_SESSION["username"];
+    	}
+	else
+	{
+		echo '
+        <div class="collapse navbar-collapse">
+         <ul class="nav navbar-nav" >
+	          </ul>
+	        </div><!-- /.nav-collapse -->
+	      </div><!-- /.container -->
+	    </div><!-- /.navbar -->';
 
+		echo '<div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
+	 <h2>Login</h2>
+	 <form name="htmlform" method="post" action="update.php">
+	  <table width="450px">
+	  </tr>
+	  <td valign="top">
+	   <input  type="hidden" name="id" maxlength="30" size="30" value="login">
+	  </td>
+	  <tr>
+	   <td valign="top">
+	    <label>Username</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="text" name="username" maxlength="50" size="30">
+	   </td>
+	  <tr>
+	   <td valign="top">
+	    <label>Password</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="password" name="password" maxlength="50" size="30">
+	   </td>
+	  </tr>
+	  <tr>
+	   <td colspan="2" style="text-align:center">
+	    <input type="submit" value="Submit">
+	   </td>
+	  </tr>
+	  </table>
+	  </form>
+	 </div>
+	  <div style="float:right;margin: 10px;padding:20px;">
+	<h2>Add Member</h2>
+	  <form name="htmlform" method="post" action="update.php">
+	  <table width="450px">
+	  </tr>
+	  <td valign="top">
+	   <input  type="hidden" name="id" maxlength="30" size="30" value="signup">
+	  </td>
+	  <tr>
+	   <td valign="top">
+	    <label>Username</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="text" name="username" maxlength="50" size="30">
+	   </td>
+	  </tr>
+	  <tr>
+	   <td valign="top">
+	    <label>Name</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="text" name="cname" maxlength="50" size="30">
+	   </td>
+	  </tr>
 
-<!-- check if the session is set. if it is display the home page of the user -->
-<?php if (isset($_SESSION['username']) && !empty($_SESSION['username']))
-{
-	//display homepage;
-	echo 'hi' +  $_SESSION["username"];
-}
-else
-{
-	echo '<div style="float:left;margin: 10px;padding:80px;border-right: solid black;">
- <h2>Login</h2>
- <form name="htmlform" method="post" action="update.php">
-  <table width="450px">
-  </tr>
-  <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="login">
-  </td>
-  <tr>
-   <td valign="top">
-    <label>Username</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="username" maxlength="50" size="30">
-   </td>
-  <tr>
-   <td valign="top">
-    <label>Password</label>
-   </td>
-   <td valign="top">
-    <input  type="password" name="password" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td colspan="2" style="text-align:center">
-    <input type="submit" value="Submit">
-   </td>
-  </tr>
-  </table>
-  </form>
- </div>
-  <div style="float:right;margin: 10px;padding:20px;">
-<h2>Add Member</h2>
-  <form name="htmlform" method="post" action="update.php">
-  <table width="450px">
-  </tr>
-  <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="signup">
-  </td>
-  <tr>
-   <td valign="top">
-    <label>Username</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="username" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td valign="top">
-    <label>Name</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="cname" maxlength="50" size="30">
-   </td>
-  </tr>
-
- <tr>
-   <td valign="top">
-    <label>Email</label>
-   </td>
-   <td valign="top">
-    <input  type="text"  name="cemail" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td valign="top">
-    <label>Address</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="caddress" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td valign="top">
-    <label>Password</label>
-   </td>
-   <td valign="top">
-    <input  type="password" name="password" maxlength="50" size="30">
-   </td>
-  </tr>
-  <tr>
-   <td colspan="2" style="text-align:center">
-    <input type="submit" value="Submit">
-   </td>
-  </tr>
-  </table>
-  </form>
-  </div>';
-}
- ?>
+	 <tr>
+	   <td valign="top">
+	    <label>Email</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="text"  name="cemail" maxlength="50" size="30">
+	   </td>
+	  </tr>
+	  <tr>
+	   <td valign="top">
+	    <label>Address</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="text" name="caddress" maxlength="50" size="30">
+	   </td>
+	  </tr>
+	  <tr>
+	   <td valign="top">
+	    <label>Password</label>
+	   </td>
+	   <td valign="top">
+	    <input  type="password" name="password" maxlength="50" size="30">
+	   </td>
+	  </tr>
+	  <tr>
+	   <td colspan="2" style="text-align:center">
+	    <input type="submit" value="Submit">
+	   </td>
+	  </tr>
+	  </table>
+	  </form>
+	  </div>';
+	}
+	 ?>
     <!--================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

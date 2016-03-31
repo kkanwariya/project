@@ -12,6 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+session_start();
 if ($_POST['id'] == "issue")
 {
   $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
@@ -39,11 +40,10 @@ elseif($_POST['id']  == "login")
     if (mysqli_num_rows($result) > 0)
 	{
 		//start the session.
-		session_start();
 		$row = mysqli_fetch_assoc($result);
-		$_SESSION["username"]=$_POST[username];
+		$_SESSION["username"]=$_POST['username'];
 		$_SESSION["cid"]= $row['cid'];
-		// echo 'hi' + $_SESSION["username"];
+		// echo 'hi' + $_SESSION['username'];
 		header('Location: index.php');
 	}
 	else
@@ -83,6 +83,11 @@ elseif ($_POST['id'] == "return")
   // echo $dateissue;
   $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `dateissue`, `datereturn`) VALUES ($_POST[bid], $_POST[cid], '$dateissue', '$datereturn')";
   $result = $conn->query($sql);
+}
+elseif($_POST['id'] == "logout")
+{
+	session_destroy(); 
+	header('Location: index.php');
 }
 
 echo "</br><a href='index.php'>Go Back</a>";
