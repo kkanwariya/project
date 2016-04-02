@@ -55,7 +55,34 @@
 		<!-- check if the session is set. if it is display the home page of the user -->';
         // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
         //display homepage;
-		echo 'hi '.$_SESSION["username"];
+		echo '<h2> Welcome '.$_SESSION["username"].'</h2>';
+		//
+		$servername = "localhost";
+		$username = "root";
+		$password = "shubh";
+		$dbname = "project";
+		$issuedays = 15;
+		// Create connection
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		// Check connection
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		}
+		else{
+			$sql="SELECT `dateissue`, `expiration`, `bname`, `bid` FROM `issue` WHERE cid='$_SESSION[cid]'";
+			$result = $conn->query($sql);
+			 if (mysqli_num_rows($result) > 0)
+			{
+				echo "</br></br><h3>Book that you have issued</h3></br></br>";
+				echo '<table style="width:80%"><tr><th>Bookname</th><th>Book Id</th><th>Date of Issue</th><th>Date of Expiration</th></tr>';
+				while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+					echo '<tr>';
+					echo '<td>'.$row['bname'].'</td>'.'<td>'.$row['bid'].'</td>'.'<td>'.$row['dateissue'].'</td>'.'<td>'.$row['expiration'].'</td>';
+					echo '</tr>';
+				}
+
+			}
+		}
     	}
 	else
 	{
@@ -71,7 +98,6 @@
 	 <h2>Login</h2>
 	 <form name="htmlform" method="post" action="update.php">
 	  <table width="450px">
-	  </tr>
 	  <td valign="top">
 	   <input  type="hidden" name="id" maxlength="30" size="30" value="login">
 	  </td>
