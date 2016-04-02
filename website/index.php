@@ -38,17 +38,17 @@
 			<input  type="hidden" name="id" value="logout">
 			<input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
 			</form>
-        </div>
-        <div class="collapse navbar-collapse">
+	        </div>
+	        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
          <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-            <li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
-            <li><a href="./return.php" style="font-size: 30px">Return</a></li>
-            <li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
-            <li><a href="./return.php" style="font-size: 30px">Return</a></li>
-            <li><a href="./search.php" style="font-size: 30px">Search</a></li>
-
-	          </ul>
+         <li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
+            <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
+            if ($_SESSION['admin']){
+            	echo '<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
+            <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
+            } 
+	        echo  '</ul>
 	        </div><!-- /.nav-collapse -->
 	      </div><!-- /.container -->
 	    </div><!-- /.navbar -->

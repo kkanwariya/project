@@ -35,7 +35,7 @@ elseif($_POST['id']  == "insertbook")
 elseif($_POST['id']  == "login")
 {
 	$pass=md5($_POST['password']);
-	$sql="SELECT cid FROM customer WHERE username='$_POST[username]' and password = '$pass'";
+	$sql="SELECT cid,admin FROM customer WHERE username='$_POST[username]' and password = '$pass'";
     $result = $conn->query($sql);
     if (mysqli_num_rows($result) > 0)
 	{
@@ -43,6 +43,7 @@ elseif($_POST['id']  == "login")
 		$row = mysqli_fetch_assoc($result);
 		$_SESSION["username"]=$_POST['username'];
 		$_SESSION["cid"]= $row['cid'];
+		$_SESSION["admin"]= $row['admin'];
 		// echo 'hi' + $_SESSION['username'];
 		header('Location: index.php');
 	}

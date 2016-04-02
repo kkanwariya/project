@@ -25,11 +25,11 @@ CREATE TABLE issue
 	dateissue DATE NOT NULL ,
 	expiration DATE NOT NULL ,
 	bookname VARCHAR(255) NOT NULL ,
-	bookid INT NOT NULL ,
+	bid INT NOT NULL ,
 	cid INT NOT NULL ,
 	PRIMARY KEY (issueid),
-	Foreign key (bid) refrences (book),
-	Foreign key (cid) refrences (customer)
+	Foreign key (bid) references book(bid),
+	Foreign key (cid) references customer(cid)
 );
 
 CREATE TABLE bookreturn
@@ -39,6 +39,6 @@ CREATE TABLE bookreturn
     cid int,
     datereturn DATE,
     PRIMARY KEY (returnid),
-    Foreign key (bid) refrences (book),
-	Foreign key (cid) refrences (customer)
+    Foreign key (bid) references book(bid),
+	Foreign key (cid) references customer(cid)
 )
