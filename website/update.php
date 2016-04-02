@@ -56,17 +56,28 @@ elseif ($_POST['id'] == "signup")
 {
   $pass=md5($_POST['password']);
   //check for uniqueness of username
-  $sql = "INSERT INTO `customer`(`cname`, `cemail`, `caddress`,`username`, `password`) VALUES ( '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]', '$_POST[username]','$pass')";
-  $conn->query($sql);
-  //can remove the cid from display
-  $sql= "SELECT `cid` from `customer` WHERE cname ='$_POST[cname]' and cemail = '$_POST[cemail]' and caddress='$_POST[caddress]'";
+  $sql = "SELECT * from customer Where username='$_POST[username]'";
   $result = $conn->query($sql);
-  $row = mysqli_fetch_assoc($result);
-  echo "Your Customer ID is:";
-  echo $row['cid'];
-  // echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-  //i.e. till this point
-  header('Location: index.php');
+  if (mysqli_num_rows($result) > 0)
+	{
+		echo "Sorry the username is already taken";
+	}
+	else{
+	$sql = "INSERT INTO `customer`(`cname`, `cemail`, `caddress`,`username`, `password`) VALUES ( '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]', '$_POST[username]','$pass')";
+	  $conn->query($sql);
+	  //can remove the cid from display
+	  $sql= "SELECT `cid` from `customer` WHERE cname ='$_POST[cname]' and cemail = '$_POST[cemail]' and caddress='$_POST[caddress]'";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  echo "Your Customer ID is:";
+	  echo $row['cid'];
+	  $_SESSION["username"]=$_POST['username'];
+	  $_SESSION["cid"]= $row['cid'];
+	  $_SESSION["admin"]= 0;
+	  // echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	  //i.e. till this point
+	  header('Location: index.php');
+	}
 }
 
 elseif ($_POST['id'] == "return")
