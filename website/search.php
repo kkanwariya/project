@@ -27,7 +27,7 @@
       <?php 
       session_start();  
       if (isset($_SESSION['username']) && !empty($_SESSION['username'])){
-      	echo ' <div class="navbar-header" style="float:right">
+        echo ' <div class="navbar-header" style="float:right">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -35,29 +35,69 @@
             <span class="icon-bar"></span>
           </button>
           <form name="htmlform" method="post" action="update.php">
-			<input  type="hidden" name="id" value="logout">
-			<input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
-			</form>
-	        </div>
-	        <div class="collapse navbar-collapse">
+      <input  type="hidden" name="id" value="logout">
+      <input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
+      </form>
+          </div>
+          <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
          <li><a href="./index.php" style="font-size: 30px">Home</a></li>
          <li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
             <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
             if ($_SESSION['admin']){
-            	echo '<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
+              echo '<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
             <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
             } 
-	        echo  '</ul>
-	        </div><!-- /.nav-collapse -->
-	      </div><!-- /.container -->
-	    </div><!-- /.navbar -->
-		<!-- check if the session is set. if it is display the home page of the user -->';
+          echo  '</ul>
+          </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+      </div><!-- /.navbar -->
+    <!-- check if the session is set. if it is display the home page of the user -->';
         // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
         //display content;
-      }
-  //display the search content 
-  ?>
+      }?>
+
+    <form name="htmlform" method="post" action="update.php">
+    <table width="450px">
+    <td valign="top">
+     <input  type="hidden" name="id" maxlength="30" size="30" value="Search">
+    </td>
+    <tr>
+     <td valign="top">
+      <label>Book Name</label>
+     </td>
+     <td valign="top">
+      <input  type="text" name="bname" maxlength="50" size="30">
+     </td>
+    </tr>
+
+    <tr>
+     <td valign="top">
+      <label>Book Author</label>
+     </td>
+     <td valign="top">
+      <input  type="text" name="bauthor" maxlength="50" size="30">
+     </td>
+    </tr>
+
+   <tr>
+     <td valign="top">
+      <label>Book ISBN</label>
+     </td>
+     <td valign="top">
+      <input  type="text"  name="bisbn" maxlength="50" size="30">
+     </td>
+    </tr>
+
+    <tr>
+     <td colspan="2" style="text-align:center">
+      <input type="submit" value="Submit">
+     </td>
+    </tr>
+
+    </table>
+    </form>
+
     <!--================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

@@ -102,6 +102,56 @@ elseif($_POST['id'] == "logout")
 	header('Location: index.php');
 }
 
+elseif($_POST['id'] == "Search")
+{
+      if (!empty($_POST['bname']))
+      {
+	      $where = ' bname = '. '\''.$_POST['bname'].'\'' ;
+      }
+      else
+      {
+	      $where = ' 1 ' ;
+      }
+      if (!empty($_POST['bauthor']))
+      {
+	      $where .= ' and bauthor = '. '\''.$_POST['bauthor'].'\'' ;
+      }
+      if (!empty($_POST['bisbn']))
+      {
+	      $where .= ' and bisbn = '. '\''.$_POST['bisbn'].'\'' ;
+      }
+	  $sql = "SELECT `bid`, `bname`, `bisbn`, `bauthor`, `bedition`, `nbooks` FROM `book` WHERE ".$where;
+	  echo $sql;
+	  $result = $conn->query($sql);
+	  $result = $conn->query($sql);
+	  if ($result->num_rows > 0){ ?>
+
+	  	?>
+		<table>
+		<tr>
+	    	<th>Book Name</th>
+	    	<th>Book Author</th> 
+	    	<th>Book ISBN</th>
+	    	<th>Book Edition</th>
+	    	<th>No of Books</th>
+	  	</tr>
+	  	<?php
+	  	while($row = $result->fetch_assoc()) {
+	        echo "<tr> <td>".$row[bname]."</td> <td>".$row[bisbn]."</td> <td>".$row[bauthor]."</td> <td>".$row[bedition]."</td> <td>".$row[nbooks]."</td>".$row[grade].'</td></tr>';
+	    }
+  	?>
+	</table>
+
+
+<?php
+	}
+	// echo "echo";
+	else
+	{
+		echo "Sorry !!! No Books Available ";
+	}
+}
+
 echo "</br><a href='index.php'>Go Back</a>";
 $conn->close();
 ?>
