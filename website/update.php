@@ -1,5 +1,3 @@
-<html>
-<body>
 <?php
 $servername = "localhost";
 $username = "root";
@@ -13,6 +11,28 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 session_start();
+echo '<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Shubham Jain">
+
+    <title>Book Management</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/offcanvas.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="padding:50px 50px 0px 50px">';
 if ($_POST['id'] == "issue")
 {
   $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
@@ -121,36 +141,29 @@ elseif($_POST['id'] == "Search")
 	      $where .= ' and bisbn = '. '\''.$_POST['bisbn'].'\'' ;
       }
 	  $sql = "SELECT `bid`, `bname`, `bisbn`, `bauthor`, `bedition`, `nbooks` FROM `book` WHERE ".$where;
-	  echo $sql;
+	  // echo $sql;
 	  $result = $conn->query($sql);
-	  $result = $conn->query($sql);
-	  if ($result->num_rows > 0){ ?>
+	  if ($result->num_rows > 0){ 
 
-	  	?>
-		<table>
+		echo '<table style="width:80%;margin-left:20px">
 		<tr>
 	    	<th>Book Name</th>
 	    	<th>Book Author</th> 
 	    	<th>Book ISBN</th>
 	    	<th>Book Edition</th>
 	    	<th>No of Books</th>
-	  	</tr>
-	  	<?php
+	  	</tr>';
 	  	while($row = $result->fetch_assoc()) {
-	        echo "<tr> <td>".$row[bname]."</td> <td>".$row[bisbn]."</td> <td>".$row[bauthor]."</td> <td>".$row[bedition]."</td> <td>".$row[nbooks]."</td>".$row[grade].'</td></tr>';
+	        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bisbn']."</td> <td>".$row['bauthor']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td></tr>";
 	    }
-  	?>
-	</table>
-
-
-<?php
+	    echo'</table>';
+		}
+		// echo "echo";
+		else
+		{
+			echo "Sorry !!! No Books Available ";
+		}
 	}
-	// echo "echo";
-	else
-	{
-		echo "Sorry !!! No Books Available ";
-	}
-}
 
 echo "</br><a href='index.php'>Go Back</a>";
 $conn->close();
