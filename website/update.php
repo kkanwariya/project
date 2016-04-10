@@ -193,6 +193,9 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 		}
 	}
 
+
+
+
 	elseif($_POST['id'] == "Search")
 	{
 	      if (!empty($_POST['bname']))
@@ -225,10 +228,16 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 			    	<th>Edition</th>
 			    	<th>Total Books</th>
 			    	<th>Available </th>
+			    	<th>Show History</th>
 			  	</tr>';
 			  	while($row = $result->fetch_assoc())
 			  	{
-			        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bisbn']."</td> <td>".$row['bauthor']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td><td>".($row['nbooks'] - $row['nissued'])  ."</td></tr>";
+			        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bauthor']."</td> <td>".$row['bisbn']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td><td>".($row['nbooks'] - $row['nissued'])  ."</td>";
+			        echo'<td><form action="update.php" method="post">
+					    <input  type="hidden" name="id" maxlength="30" size="30" value="history">
+			        	<input type="hidden" name="bid" value='.$row['bid'].'>
+						<input type="submit" value="History">
+					</form></td></tr>';
 			    }
 			    echo'</table>';
 				}
@@ -295,6 +304,33 @@ elseif ($_POST['id'] == "signup")
 	  header('Location: index.php');
 	}
 }
+
+elseif($_POST['id'] == "history")
+{
+	  $sql = "SELECT * FROM `bookreturn` WHERE bid =".$_POST['bid'];
+	  // echo $sql;
+	  $result = $conn->query($sql);
+	  if ($result->num_rows > 0)
+	  { 
+	  		echo '<h3>Books : </h3>';
+			echo '<table width="110%" style="margin-left:20px">
+			<tr>
+		    	<th>Customer ID</th>
+		    	<th>Issue Date</th> 
+		    	<th>Return Date</th>
+		  	</tr>';
+		  	while($row = $result->fetch_assoc())
+		  	{
+		        echo "<tr> <td>".$row['cid']."</td> <td>".$row['dateissue']."</td> <td>".$row['datereturn']."</td></tr>";
+		    }
+		    echo'</table>';
+	}
+	else
+	{
+		echo "No one has issued it yet.";
+	}
+}
+
 
 echo "</br><h4><a href='index.php'>Go to homepage</a></h4>";
 $conn->close();
