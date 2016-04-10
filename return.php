@@ -61,16 +61,8 @@
   <table width="450px">
   </tr>
   <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="return">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="showlist">
   </td>
-  <tr>
-   <td valign="top">
-    <label>Book Id</label>
-   </td>
-   <td valign="top">
-    <input  type="text" name="bid" maxlength="50" size="30">
-   </td>
-  </tr>
   <tr>
    <td valign="top">
     <label>Customer id</label>
