@@ -160,7 +160,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 	      }
 	    if(!empty($_POST['cid']))
 	    {
-	    	$where =$where.' cid = '. '\''.$_POST['cid'].'\'' ;
+	    	$where .= ' cid = '. '\''.$_POST['cid'].'\'' ;
 	    }
 	    if($where =='')
 	    {
@@ -197,7 +197,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 	{
 	      if (!empty($_POST['bname']))
 	      {
-		      $where = ' bname = '. '\''.$_POST['bname'].'\'' ;
+		      $where = "bname like '%".$_POST['bname']."%'";
 	      }
 	      else
 	      {
@@ -205,24 +205,25 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 	      }
 	      if (!empty($_POST['bauthor']))
 	      {
-		      $where .= ' and bauthor = '. '\''.$_POST['bauthor'].'\'' ;
+		      $where .= " and bauthor like '%".$_POST['bauthor']."%'";
 	      }
 	      if (!empty($_POST['bisbn']))
 	      {
-		      $where .= ' and bisbn = '. '\''.$_POST['bisbn'].'\'' ;
+		       $where .= " and bisbn like '%".$_POST['bisbn']."%'";
 	      }
 		  $sql = "SELECT * FROM `book` WHERE ".$where;
 		  // echo $sql;
 		  $result = $conn->query($sql);
 		  if ($result->num_rows > 0)
 		  { 
-				echo '<table style="width:80%;margin-left:20px">
+		  		echo '<h3>Books : </h3>';
+				echo '<table width="110%" style="margin-left:20px">
 				<tr>
-			    	<th>Book Name</th>
-			    	<th>Book Author</th> 
-			    	<th>Book ISBN</th>
-			    	<th>Book Edition</th>
-			    	<th>Total number of Books</th>
+			    	<th>Name</th>
+			    	<th>Author</th> 
+			    	<th>ISBN</th>
+			    	<th>Edition</th>
+			    	<th>Total Books</th>
 			    	<th>Available </th>
 			  	</tr>';
 			  	while($row = $result->fetch_assoc())
