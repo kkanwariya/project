@@ -1,17 +1,4 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "shubh";
-$dbname = "project";
-$issuedays = 15;
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-session_start();
-echo '<html lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,27 +19,228 @@ echo '<html lang="en">
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body style="padding:50px 50px 0px 50px">';
-if ($_POST['id'] == "issue")
-{
-  $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_assoc($result);
-  $dat=$row['da'];
-  $exp=$row['expdate'];
-  $sql= "SELECT bname from `book` where `bid`=$_POST[bid]";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_assoc($result);
-  $bname=$row['bname'];
-  $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bookname`, `bookid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
-  $result = $conn->query($sql);
+  <body style="padding:50px 50px 0px 50px;margin:30px">
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "shubh";
+$dbname = "project";
+$issuedays = 15;
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-elseif($_POST['id']  == "insertbook")
+session_start();
+echo '';
+if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 {
-  $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', $_POST[bisbn], '$_POST[bauthor]', $_POST[bedition], $_POST[nbooks])";
-  $result = $conn->query($sql);
+  	echo ' <div class="navbar-header" style="float:right">
+      <form name="htmlform" method="post" action="update.php">
+		<input  type="hidden" name="id" value="logout">
+		<input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
+		</form>
+        </div>
+        <div class="collapse navbar-collapse">
+     <ul class="nav navbar-nav" >
+     <li><a href="./index.php" style="font-size: 30px">Home</a></li>
+        <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
+        if ($_SESSION['admin']){
+        	echo '
+        	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
+        	<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
+        <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
+        } 
+        echo  '</ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </div><!-- /.navbar -->
+	<!-- check if the session is set. if it is display the home page of the user -->';
+    // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
+    //display homepage;
+    if ($_POST['id'] == "issue")
+	{
+	  $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  $dat=$row['da'];
+	  $exp=$row['expdate'];
+		//check for the number of books issued
+	  $sql= "SELECT bname,nissued,nbooks from `book` where `bid`=$_POST[bid]";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  if ($row['nissued'] >= $row['nbooks'])
+	  {
+	  		echo "<h4> Sorry the all the copies of the book has been issued";
+	  }
+	  else
+	  {
+	  	  $bname=$row['bname'];
+		  $sql = "INSERT INTO `issue`(`dateissue`, `expiration`, `bname`, `bid`, `cid`) VALUES ('$dat','$exp','$bname','$_POST[bid]','$_POST[cid]')";
+		  $result = $conn->query($sql);
+		  if($result)
+		  {
+		  	$nissue= $row['nissued']+1;
+		  	$sql = "UPDATE `book` SET `nissued`='$nissue' WHERE `bid`=$_POST[bid]";
+		  	$result = $conn->query($sql);
+			echo "<h4> Book Successfully Issued</h4> ";
+		  }
+		  else
+		  {
+			echo "<h4> Can't be Issued due to some nontraceable error</h4> ";
+		  }
+	  }
+		  
+	}
+	elseif($_POST['id']  == "insert")
+	{
+	  $sql = "INSERT INTO `book`(`bname`, `bisbn`, `bauthor`, `bedition`, `nbooks`) VALUES ('$_POST[bname]', '$_POST[bisbn]', '$_POST[bauthor]', '$_POST[bedition]', '$_POST[nbooks]')";
+	  $result = $conn->query($sql);
+	  echo "<h4>Book Successfully Inserted</h4>";
+	}
+	elseif ($_POST['id'] == "return")
+	{
+	  $sql = "SELECT * FROM `issue` WHERE `issueid`=$_POST[issueid]";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  echo "<h4>Issued Till  ";
+	  echo $row["expiration"]. '<br/></h4>';
+	  $dateissue = $row["dateissue"];
+	  $dateexp = $row["expiration"];
+	  $bid=$row["bid"];
+	  $cid=$row["cid"];
+	  $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  $datereturn=$row['da'];
+	  $sql= "SELECT DATEDIFF('$datereturn','$dateexp') as diff";
+	  $result = $conn->query($sql);
+	  $row = mysqli_fetch_assoc($result);
+	  if($row['diff']  > 0)
+	  {
+	  	 echo "<h4>Fine Imposed : ". ($row['diff'] *10);
+	  	 $sql = "SELECT `fine` FROM `customer` WHERE cid = $cid";
+	  	 $result = $conn->query($sql);
+	  	 $row = mysqli_fetch_assoc($result);
+	  	 $fine = $row['diff'] *10 + $row['fine'];
+	  	 $sql = "UPDATE `customer` SET `fine`=$fine WHERE cid = $cid";
+	  	 $result = $conn->query($sql);
+	  	 //update fine
+	  }
+	  // echo $dateissue;
+	  $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `datereturn`, `dateissue`) VALUES ('$bid', '$cid', '$datereturn', '$dateissue')";
+	  // echo $sql;
+	  $result = $conn->query($sql);
+	  if($result)
+	  {
+		echo "Book Successfully Returned";
+		$sql= "DELETE FROM `issue` WHERE `bid`=$bid and cid = $cid";
+		$result = $conn->query($sql);
+		$sql= "SELECT nissued from `book` where `bid`=$bid";
+		$result = $conn->query($sql);
+	  	$row = mysqli_fetch_assoc($result);
+	  	$nissue=$row['nissued']-1;
+	  	$sql = "UPDATE `book` SET `nissued`='$nissue' WHERE `bid`=$bid";
+		$result = $conn->query($sql);
+	  }
+	  else
+	  {
+		echo "Couldn't Return";
+	  }  
+	}
+	elseif($_POST['id'] == "showlist")
+	{
+		$where='';
+		if (!empty($_POST['bid']))
+	      {		
+		      $where = ' bid = '. '\''.$_POST['bid'].'\'' ;
+	      }
+	    if(!empty($_POST['cid']))
+	    {
+	    	$where =$where.' cid = '. '\''.$_POST['cid'].'\'' ;
+	    }
+	    if($where =='')
+	    {
+	    	$where=1;
+	    }
+		$sql="SELECT * FROM `issue` WHERE ".$where;
+		$result = $conn->query($sql);
+		 if (mysqli_num_rows($result) > 0)
+		{
+			if(!empty($_POST['cid']))
+	    	{
+				echo "</br></br><h3>Book issued by  customer with id ".$_POST['cid']." </h3></br></br>";
+			}
+			echo '<table style="width:80%"><tr><th>Cid</th><th>Bookname</th><th>Book Id</th><th>Date of Issue</th><th>Date of Expiration</th></tr>';
+			while ($row = mysqli_fetch_array($result, MYSQL_ASSOC))
+			{
+				echo '<tr>';
+				echo '<td>'.$row['cid'].'</td>'.'<td>'.$row['bname'].'</td>'.'<td>'.$row['bid'].'</td>'.'<td>'.$row['dateissue'].'</td>'.'<td>'.$row['expiration'].'</td>';
+		        echo'<td><form action="update.php" method="post">
+				    <input  type="hidden" name="id" maxlength="30" size="30" value="return">
+		        	<input type="hidden" name="issueid" value='.$row['issueid'].'>
+					<input type="submit" value="Return">
+				</form></td></tr>';
+			}
+			echo "</table>";
+		}
+		else
+		{
+			echo "<h3> No books found !! </h3>";
+		}
+	}
+
+	elseif($_POST['id'] == "Search")
+	{
+	      if (!empty($_POST['bname']))
+	      {
+		      $where = ' bname = '. '\''.$_POST['bname'].'\'' ;
+	      }
+	      else
+	      {
+		      $where = ' 1 ' ;
+	      }
+	      if (!empty($_POST['bauthor']))
+	      {
+		      $where .= ' and bauthor = '. '\''.$_POST['bauthor'].'\'' ;
+	      }
+	      if (!empty($_POST['bisbn']))
+	      {
+		      $where .= ' and bisbn = '. '\''.$_POST['bisbn'].'\'' ;
+	      }
+		  $sql = "SELECT * FROM `book` WHERE ".$where;
+		  // echo $sql;
+		  $result = $conn->query($sql);
+		  if ($result->num_rows > 0)
+		  { 
+				echo '<table style="width:80%;margin-left:20px">
+				<tr>
+			    	<th>Book Name</th>
+			    	<th>Book Author</th> 
+			    	<th>Book ISBN</th>
+			    	<th>Book Edition</th>
+			    	<th>Total number of Books</th>
+			    	<th>Available </th>
+			  	</tr>';
+			  	while($row = $result->fetch_assoc())
+			  	{
+			        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bisbn']."</td> <td>".$row['bauthor']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td><td>".($row['nbooks'] - $row['nissued'])  ."</td></tr>";
+			    }
+			    echo'</table>';
+				}
+				// echo "echo";
+			else
+			{
+				echo "<h4>Sorry !!! No Books Available </h4>";
+			}
+	}
+
 }
-elseif($_POST['id']  == "login")
+
+if($_POST['id']  == "login")
 {
 	$pass=md5($_POST['password']);
 	$sql="SELECT cid,admin FROM customer WHERE username='$_POST[username]' and password = '$pass'";
@@ -72,6 +260,12 @@ elseif($_POST['id']  == "login")
 		echo "Incorrect username/password";
 	}
 }
+elseif($_POST['id'] == "logout")
+	{
+		session_destroy(); 
+		header('Location: index.php');
+	}
+
 elseif ($_POST['id'] == "signup")
 {
   $pass=md5($_POST['password']);
@@ -82,8 +276,9 @@ elseif ($_POST['id'] == "signup")
 	{
 		echo "Sorry the username is already taken";
 	}
-	else{
-	$sql = "INSERT INTO `customer`(`cname`, `cemail`, `caddress`,`username`, `password`) VALUES ( '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]', '$_POST[username]','$pass')";
+	else
+	{
+	  $sql = "INSERT INTO `customer`(`cname`, `cemail`, `caddress`,`username`, `password`) VALUES ( '$_POST[cname]', '$_POST[cemail]', '$_POST[caddress]', '$_POST[username]','$pass')";
 	  $conn->query($sql);
 	  //can remove the cid from display
 	  $sql= "SELECT `cid` from `customer` WHERE cname ='$_POST[cname]' and cemail = '$_POST[cemail]' and caddress='$_POST[caddress]'";
@@ -100,74 +295,14 @@ elseif ($_POST['id'] == "signup")
 	}
 }
 
-elseif ($_POST['id'] == "return")
-{
-  $sql = "SELECT `issueid`, `dateissue`, `expiration`, `bookname`, `bookid`, `cid` FROM `issue` WHERE `bookid`=$_POST[bid] and cid = $_POST[cid]";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_assoc($result);
-  echo "Issued Till  ";
-  echo $row["expiration"];
-  $dateissue = $row["dateissue"];
-  $sql= "SELECT CURDATE() as da, DATE_ADD(CURDATE(),INTERVAL $issuedays DAY) as expdate";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_assoc($result);
-  $datereturn=$row['da'];
-  // echo $dateissue;
-  $sql= "INSERT INTO `bookreturn`(`bid`, `cid`, `dateissue`, `datereturn`) VALUES ($_POST[bid], $_POST[cid], '$dateissue', '$datereturn')";
-  $result = $conn->query($sql);
-}
-elseif($_POST['id'] == "logout")
-{
-	session_destroy(); 
-	header('Location: index.php');
-}
-
-elseif($_POST['id'] == "Search")
-{
-      if (!empty($_POST['bname']))
-      {
-	      $where = ' bname = '. '\''.$_POST['bname'].'\'' ;
-      }
-      else
-      {
-	      $where = ' 1 ' ;
-      }
-      if (!empty($_POST['bauthor']))
-      {
-	      $where .= ' and bauthor = '. '\''.$_POST['bauthor'].'\'' ;
-      }
-      if (!empty($_POST['bisbn']))
-      {
-	      $where .= ' and bisbn = '. '\''.$_POST['bisbn'].'\'' ;
-      }
-	  $sql = "SELECT `bid`, `bname`, `bisbn`, `bauthor`, `bedition`, `nbooks` FROM `book` WHERE ".$where;
-	  // echo $sql;
-	  $result = $conn->query($sql);
-	  if ($result->num_rows > 0){ 
-
-		echo '<table style="width:80%;margin-left:20px">
-		<tr>
-	    	<th>Book Name</th>
-	    	<th>Book Author</th> 
-	    	<th>Book ISBN</th>
-	    	<th>Book Edition</th>
-	    	<th>No of Books</th>
-	  	</tr>';
-	  	while($row = $result->fetch_assoc()) {
-	        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bisbn']."</td> <td>".$row['bauthor']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td></tr>";
-	    }
-	    echo'</table>';
-		}
-		// echo "echo";
-		else
-		{
-			echo "Sorry !!! No Books Available ";
-		}
-	}
-
-echo "</br><a href='index.php'>Go Back</a>";
+echo "</br><h4><a href='index.php'>Go to homepage</a></h4>";
 $conn->close();
 ?>
+ <!--================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="./css/bootstrap.min.js"></script>
+    <script src="./css/offcanvas.js"></script>
 
 </body>
 </html>
