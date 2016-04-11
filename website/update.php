@@ -347,33 +347,6 @@ elseif ($_POST['id'] == "signup")
 	}
 }
 
-elseif($_POST['id'] == "history")
-{
-	  $sql = "SELECT * FROM `bookreturn` WHERE bid =".$_POST['bid'];
-	  // echo $sql;
-	  $result = $conn->query($sql);
-	  if ($result->num_rows > 0)
-	  { 
-	  		echo '<h3>Books : </h3>';
-			echo '<table width="110%" style="margin-left:20px">
-			<tr>
-		    	<th>Customer ID</th>
-		    	<th>Issue Date</th> 
-		    	<th>Return Date</th>
-		  	</tr>';
-		  	while($row = $result->fetch_assoc())
-		  	{
-		        echo "<tr> <td>".$row['cid']."</td> <td>".$row['dateissue']."</td> <td>".$row['datereturn']."</td></tr>";
-		    }
-		    echo'</table>';
-	}
-	else
-	{
-		echo "No one has issued it yet.";
-	}
-}
-
-
 echo "</br><h4><a href='index.php'>Go to homepage</a></h4>";
 $conn->close();
 ?>
