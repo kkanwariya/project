@@ -176,11 +176,14 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 	    	{
 				echo "</br></br><h3>Book issued by  customer with id ".$_POST['cid']." </h3></br></br>";
 			}
-			echo '<table style="width:80%"><tr><th>Cid</th><th>Bookname</th><th>Book Id</th><th>Date of Issue</th><th>Date of Expiration</th></tr>';
+			echo '<table style="width:80%"><tr><th>Cid</th><th>Customer username</th><th>Bookname</th><th>Book Id</th><th>Date of Issue</th><th>Date of Expiration</th></tr>';
 			while ($row = mysqli_fetch_array($result, MYSQL_ASSOC))
 			{
+				$sql = "SELECT * FROM `customer` WHERE cid = ".$row['cid'];
+	  	 		$result1 = $conn->query($sql);
+	  	 		$row1 = mysqli_fetch_assoc($result1);
 				echo '<tr>';
-				echo '<td>'.$row['cid'].'</td>'.'<td>'.$row['bname'].'</td>'.'<td>'.$row['bid'].'</td>'.'<td>'.$row['dateissue'].'</td>'.'<td>'.$row['expiration'].'</td>';
+				echo '<td>'.$row['cid'].'</td>'.'<td>'.$row1['username'].'</td>'.'<td>'.$row['bname'].'</td>'.'<td>'.$row['bid'].'</td>'.'<td>'.$row['dateissue'].'</td>'.'<td>'.$row['expiration'].'</td>';
 		        echo'<td><form action="update.php" method="post">
 				    <input  type="hidden" name="id" maxlength="30" size="30" value="return">
 		        	<input type="hidden" name="issueid" value='.$row['issueid'].'>
@@ -272,13 +275,21 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 				echo '<table width="80%" style="margin-left:20px">
 				<tr>
 			    	<th>Customer ID</th>
+			    	<th>Customer username</th>
 			    	<th> Book Id </th>
+			    	<th>Book Name</th>
 			    	<th>Issue Date</th> 
 			    	<th>Return Date</th>
 			  	</tr>';
 			  	while($row = $result->fetch_assoc())
 			  	{
-			        echo "<tr> <td>".$row['cid']."</td><td>".$row['bid']."</td> <td>".$row['dateissue']."</td> <td>".$row['datereturn']."</td></tr>";
+			  		$sql = "SELECT * FROM `customer` WHERE cid = ".$row['cid'];
+		  	 		$result1 = $conn->query($sql);
+		  	 		$row1 = mysqli_fetch_assoc($result1);
+		  	 		$sql = "SELECT * FROM `book` WHERE bid = ".$row['bid'];
+	  	 			$result2 = $conn->query($sql);
+	  	 			$row2 = mysqli_fetch_assoc($result2);
+			        echo "<tr> <td>".$row['cid']."</td><td>".$row1['username']."</td><td>".$row['bid']."</td> <td>".$row2['bname']."</td><td>".$row['dateissue']."</td> <td>".$row['datereturn']."</td></tr>";
 			    }
 			    echo'</table>';
 		}
