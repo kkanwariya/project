@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Shubham Jain">
 
-    <title>Issue | Book Management</title>
+    <title>History | Book Management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.css" rel="stylesheet">
@@ -20,13 +20,14 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-    <body style="padding:50px 50px 0px 50px;margin:30px">
+
+   <body style="padding:50px 50px 0px 50px;margin:30px">
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
       <?php 
       session_start();  
       if (isset($_SESSION['username']) && !empty($_SESSION['username'])){
-      	echo ' <div class="navbar-header" style="float:right">
+        echo ' <div class="navbar-header" style="float:right">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -34,42 +35,42 @@
             <span class="icon-bar"></span>
           </button>
           <form name="htmlform" method="post" action="update.php">
-			<input  type="hidden" name="id" value="logout">
-			<input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
-			</form>
-	        </div>
-	        <div class="collapse navbar-collapse">
+      <input  type="hidden" name="id" value="logout">
+      <input type="submit" style="border:0px;background-color: transparent;color:#999999;font-size:30px" value="Logout">
+      </form>
+          </div>
+          <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
          <li><a href="./index.php" style="font-size: 30px">Home</a></li>
             <li><a href="./search.php" style="font-size: 30px">Search</a></li>
             <li><a href="./history.php" style="font-size: 30px">History</a></li>';
             if ($_SESSION['admin']){
-            	echo '
-            	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
-            	<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
+              echo '
+              <li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
+              <li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
             <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
             } 
-	        echo  '</ul>
-	        </div><!-- /.nav-collapse -->
-	      </div><!-- /.container -->
-	    </div><!-- /.navbar -->
-		<!-- check if the session is set. if it is display the home page of the user -->';
+          echo  '</ul>
+          </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+      </div><!-- /.navbar -->
+    <!-- check if the session is set. if it is display the home page of the user -->';
         // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
         //display content;
-   if($_SESSION['admin']){
-   echo '<h2>Issue a Book</h2>
+    //    <h4  style="margin: 30px;"> Please provide atleast one of them </h4>
+  echo '<h2 style="margin-bottom: 30px;">History</h2>
+  <h5  style="margin: 30px;"> Leaving everything empty will display the whole record </h5>
   <form name="htmlform" method="post" action="update.php">
-  <table width="450px">
-  </tr>
+  <table width="450px"> 
   <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="issue">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="history">
   </td>
   <tr>
-   <td valign="top">
-    <label>Book Id</label>
+  <td valign="top">
+    <label>Book id</label>
    </td>
-   <td valign="top">
-    <input  type="text" name="bid" maxlength="50" size="30" style="margin-bottom: 20px;">
+  <td valign="top">
+    <input  type="text" name="bid" maxlength="50" size="30"  style="margin-bottom: 20px;">
    </td>
   </tr>
   <tr>
@@ -77,10 +78,8 @@
     <label>Customer id</label>
    </td>
    <td valign="top">
-    <input type="text" name="cid" maxlength="50" size="30" style="margin-bottom: 20px;">
+    <input type="text" name="cid" maxlength="50" size="30"  style="margin-bottom: 20px;">
    </td>
-  </tr>
-
   </tr>
   <tr>
    <td colspan="2" style="text-align:center">
@@ -89,10 +88,6 @@
   </tr>
   </table>
   </form>';
-}
-else{
-	echo '<p style="font-size:30px;">This page is only for admin</p>';
-}
       }
   else
   {
@@ -107,13 +102,12 @@ else{
   }
    ?>
     
-	  
     <!--================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="./css/bootstrap.min.js"></script>
     <script src="./css/offcanvas.js"></script>
 
-	
+
   </body>
 </html>

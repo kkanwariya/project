@@ -42,7 +42,8 @@
 	        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
          <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-            <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
+            <li><a href="./search.php" style="font-size: 30px">Search</a></li>
+            <li><a href="./history.php" style="font-size: 30px">History</a></li>';
             if ($_SESSION['admin']){
             	echo '
             	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
@@ -59,6 +60,7 @@
   if($_SESSION['admin']){
     //    <h4  style="margin: 30px;"> Please provide atleast one of them </h4>
   echo '<h2 style="margin-bottom: 30px;">Return a Book</h2>
+  <h5  style="margin: 30px;"> Leaving everything empty will display the whole record </h5>
   <form name="htmlform" method="post" action="update.php">
   <table width="450px"> 
   <td valign="top">

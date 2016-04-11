@@ -47,7 +47,8 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
         <div class="collapse navbar-collapse">
      <ul class="nav navbar-nav" >
      <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-        <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
+        <li><a href="./search.php" style="font-size: 30px">Search</a></li>
+        <li><a href="./history.php" style="font-size: 30px">History</a></li>';
         if ($_SESSION['admin']){
         	echo '
         	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
@@ -238,6 +239,47 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 				echo "<h4>Sorry !!! No Books Available </h4>";
 			}
 	}
+	elseif($_POST['id'] == "history")
+	{
+			$where='';
+			if (!empty($_POST['bid']))
+		      {		
+			      $where = ' bid = '. '\''.$_POST['bid'].'\'' ;
+		      }
+		    if(!empty($_POST['cid']))
+		    {
+		    	$where .= ' cid = '. '\''.$_POST['cid'].'\'' ;
+		    }
+		    if($where =='')
+		    {
+		    	$where=1;
+		    }
+
+		  $sql = "SELECT * FROM `bookreturn` WHERE ".$where;
+		  // echo $sql;
+		  $result = $conn->query($sql);
+		  if ($result->num_rows > 0)
+		  { 
+		  		echo '<h3>History : </h3>';
+				echo '<table width="80%" style="margin-left:20px">
+				<tr>
+			    	<th>Customer ID</th>
+			    	<th> Book Id </th>
+			    	<th>Issue Date</th> 
+			    	<th>Return Date</th>
+			  	</tr>';
+			  	while($row = $result->fetch_assoc())
+			  	{
+			        echo "<tr> <td>".$row['cid']."</td><td>".$row['bid']."</td> <td>".$row['dateissue']."</td> <td>".$row['datereturn']."</td></tr>";
+			    }
+			    echo'</table>';
+		}
+		else
+		{
+			echo "No one has issued the related thing yet";
+		}
+	}
+
 
 }
 

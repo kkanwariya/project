@@ -42,7 +42,8 @@
 	        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
          <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-            <li><a href="./search.php" style="font-size: 30px">Search</a></li>';
+            <li><a href="./search.php" style="font-size: 30px">Search</a></li>
+            <li><a href="./history.php" style="font-size: 30px">History</a></li>';
             if ($_SESSION['admin']){
             	echo '
             	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
