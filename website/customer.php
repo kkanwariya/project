@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Shubham Jain">
 
-    <title>History | Book Management</title>
+    <title>Customer | Book Management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.css" rel="stylesheet">
@@ -59,22 +59,13 @@
         // <a class="navbar-brand" href="./index.php" style="font-size:30px;">'.$_SESSION['username'].'</a>
         //display content;
     //    <h4  style="margin: 30px;"> Please provide atleast one of them </h4>
-  echo '<h2 style="margin-bottom: 30px;">History</h2>
+  echo '<h2 style="margin-bottom: 30px;">Search for customer</h2>
   <h5  style="margin: 30px;"> Leaving everything empty will display the whole record </h5>
   <form name="htmlform" method="post" action="update.php">
   <table width="450px"> 
   <td valign="top">
-   <input  type="hidden" name="id" maxlength="30" size="30" value="history">
+   <input  type="hidden" name="id" maxlength="30" size="30" value="customer">
   </td>
-  <tr>
-  <td valign="top">
-    <label>Book id</label>
-   </td>
-  <td valign="top">
-    <input  type="text" name="bid" maxlength="50" size="30"  style="margin-bottom: 20px;">
-   </td>
-  </tr>
-  <tr>
    <td valign="top">
     <label>Customer id</label>
    </td>

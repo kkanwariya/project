@@ -46,15 +46,16 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
         </div>
         <div class="collapse navbar-collapse">
      <ul class="nav navbar-nav" >
-     <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-        <li><a href="./search.php" style="font-size: 30px">Search</a></li>
-        <li><a href="./history.php" style="font-size: 30px">History</a></li>';
-        if ($_SESSION['admin']){
-        	echo '
-        	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
-        	<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
-        <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
-        } 
+    <li><a href="./index.php" style="font-size: 20px">Home</a></li>
+            <li><a href="./search.php" style="font-size: 20px">Search</a></li>
+            <li><a href="./history.php" style="font-size: 20px">History</a></li>';
+            if ($_SESSION['admin']){
+              echo '
+              <li><a href="./insert.php" style="font-size: 20px">Insert Book</a></li>
+              <li><a href="./issue.php" style="font-size: 20px">Issue</a></li>
+            <li><a href="./return.php" style="font-size: 20px">Return</a></li>
+            <li><a href="./customer.php" style="font-size: 20px">Customer</a></li>';
+            } 
         echo  '</ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
@@ -194,9 +195,6 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 		}
 	}
 
-
-
-
 	elseif($_POST['id'] == "Search")
 	{
 	      if (!empty($_POST['bname']))
@@ -223,9 +221,10 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 		  		echo '<h3>Books : </h3>';
 				echo '<table width="110%" style="margin-left:20px">
 				<tr>
+					<th>Book ID</th>
 			    	<th>Name</th>
-			    	<th>Author</th> 
 			    	<th>ISBN</th>
+			    	<th>Author</th> 
 			    	<th>Edition</th>
 			    	<th>Total Books</th>
 			    	<th>Available </th>
@@ -233,7 +232,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 			  	</tr>';
 			  	while($row = $result->fetch_assoc())
 			  	{
-			        echo "<tr> <td>".$row['bname']."</td> <td>".$row['bauthor']."</td> <td>".$row['bisbn']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td><td>".($row['nbooks'] - $row['nissued'])  ."</td>";
+			        echo "<tr> <td>".$row['bid']."</td><td>".$row['bname']."</td> <td>".$row['bisbn']."</td> <td>".$row['bauthor']."</td> <td>".$row['bedition']."</td> <td>".$row['nbooks']."</td><td>".($row['nbooks'] - $row['nissued'])  ."</td>";
 			        echo'<td><form action="update.php" method="post">
 					    <input  type="hidden" name="id" maxlength="30" size="30" value="history">
 			        	<input type="hidden" name="bid" value='.$row['bid'].'>
@@ -286,6 +285,44 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']))
 		else
 		{
 			echo "No one has issued the related thing yet";
+		}
+	}
+	elseif($_POST['id'] == "customer")
+	{
+			$where='';
+		    if(!empty($_POST['cid']))
+		    {
+		    	$where .= ' cid = '. '\''.$_POST['cid'].'\'' ;
+		    }
+		    if($where =='')
+		    {
+		    	$where=1;
+		    }
+
+		  $sql = "SELECT * FROM `customer` WHERE ".$where;
+		  // echo $sql;
+		  $result = $conn->query($sql);
+		  if ($result->num_rows > 0)
+		  { 
+		  		echo '<h3>History : </h3>';
+				echo '<table width="80%" style="margin-left:20px">
+				<tr>
+			    	<th>Customer ID</th>
+			    	<th>Customer Name </th>
+			    	<th>Customer Email</th>
+			    	<th>Customer Address </th>
+			    	<th>Customer Usernmae </th>
+			    	<th>Fine</th>
+			  	</tr>';
+			  	while($row = $result->fetch_assoc())
+			  	{
+			        echo "<tr> <td>".$row['cid']."</td><td>".$row['cname']."</td> <td>".$row['cemail']."</td> <td>".$row['caddress']."</td><td>".$row['username']."</td><td>".$row['fine']."</td></tr>";
+			    }
+			    echo'</table>';
+		}
+		else
+		{
+			echo "No customers so far";
 		}
 	}
 

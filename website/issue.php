@@ -40,14 +40,15 @@
 	        </div>
 	        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav" >
-         <li><a href="./index.php" style="font-size: 30px">Home</a></li>
-            <li><a href="./search.php" style="font-size: 30px">Search</a></li>
-            <li><a href="./history.php" style="font-size: 30px">History</a></li>';
+         <li><a href="./index.php" style="font-size: 20px">Home</a></li>
+            <li><a href="./search.php" style="font-size: 20px">Search</a></li>
+            <li><a href="./history.php" style="font-size: 20px">History</a></li>';
             if ($_SESSION['admin']){
-            	echo '
-            	<li><a href="./insert.php" style="font-size: 30px">Insert Book</a></li>
-            	<li><a href="./issue.php" style="font-size: 30px">Issue</a></li>
-            <li><a href="./return.php" style="font-size: 30px">Return</a></li>';
+              echo '
+              <li><a href="./insert.php" style="font-size: 20px">Insert Book</a></li>
+              <li><a href="./issue.php" style="font-size: 20px">Issue</a></li>
+            <li><a href="./return.php" style="font-size: 20px">Return</a></li>
+            <li><a href="./customer.php" style="font-size: 20px">Customer</a></li>';
             } 
 	        echo  '</ul>
 	        </div><!-- /.nav-collapse -->
